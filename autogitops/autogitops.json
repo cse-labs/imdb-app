@@ -1,0 +1,7 @@
+{
+    "name": "imdb",
+    "namespace": "imdb",
+    "imageName": "ghcr.io/cse-labs/imdb",
+    "imageTag": "latest",
+    "targets": ["central"] 
+}
