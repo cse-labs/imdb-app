@@ -55,7 +55,7 @@ namespace Imdb.Middleware.Validation
         /// <returns>link to doc</returns>
         public static string GetErrorLink(string path)
         {
-            string s = "https://github.com/cse-labs/imdb/blob/main/docs/ParameterValidation.md";
+            string s = "https://github.com/cse-labs/imdb-app/blob/main/docs/ParameterValidation.md";
 
             path = path.ToLowerInvariant();
 
