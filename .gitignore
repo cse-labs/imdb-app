@@ -13,7 +13,7 @@ dotFiles/**
 *.userosscache
 *.sln.docstates
 
-.vscode/
+#.vscode/
 [Pp]roperties/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
