@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using Imdb.Application.DataAccessLayer;
 using Imdb.Middleware;
 using Imdb.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
 
 namespace Imdb.Application.Controllers
 {
