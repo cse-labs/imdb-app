@@ -81,11 +81,17 @@ namespace Imdb.Application.Controllers
             return res;
         }
 
+        /// <summary>
+        /// Create a JsonResult with the error details
+        /// </summary>
+        /// <param name="errorList">list of validation errors</param>
+        /// <param name="path">request path</param>
+        /// <returns>JsonResult</returns>
         public static JsonResult CreateResult(List<ValidationError> errorList, string path)
         {
             Dictionary<string, object> data = new ()
             {
-                { "type", ValidationError.GetErrorLink(path) },
+                { "type", ValidationError.GetErrorType(path) },
                 { "title", "Parameter validation error" },
                 { "detail", "One or more invalid parameters were specified." },
                 { "status", (int)HttpStatusCode.BadRequest },

@@ -52,33 +52,40 @@ namespace Imdb.Middleware.Validation
         /// Get the doc link based on request URL
         /// </summary>
         /// <param name="path">full request path</param>
-        /// <returns>link to doc</returns>
-        public static string GetErrorLink(string path)
+        /// <returns>type of error</returns>
+        public static string GetErrorType(string path)
         {
-            string s = "https://github.com/cse-labs/imdb-app/blob/main/docs/ParameterValidation.md";
+            string s = "imdb-api";
 
             path = path.ToLowerInvariant();
 
             if (path.StartsWith("/api/movies?") || path.StartsWith("/api/movies/?"))
             {
-                s += "#movies-api";
+                s = "movies-api";
             }
             else if (path.StartsWith("/api/movies"))
             {
-                s += "#movies-direct-read";
+                s = "movies-direct-read";
             }
             else if (path.StartsWith("/api/actors?") || path.StartsWith("/api/actors/?"))
             {
-                s += "#actors-api";
+                s = "actors-api";
             }
             else if (path.StartsWith("/api/actors"))
             {
-                s += "#actors-direct-read";
+                s = "actors-direct-read";
             }
 
             return s;
         }
 
+        /// <summary>
+        /// get request category for logging
+        /// </summary>
+        /// <param name="context">http request context</param>
+        /// <param name="subCategory">out sub category</param>
+        /// <param name="mode">out mode</param>
+        /// <returns>category, subcategory and mode of request</returns>
         public static string GetCategory(HttpContext context, out string subCategory, out string mode)
         {
             string category;
@@ -117,15 +124,6 @@ namespace Imdb.Middleware.Validation
                 category = "Movies";
                 subCategory = "Movies";
                 mode = "Direct";
-
-                if (context.Request.Method == "DELETE")
-                {
-                    mode = "Delete";
-                }
-                else if (context.Request.Method == "POST" || context.Request.Method == "PUT")
-                {
-                    mode = "Upsert";
-                }
             }
             else if (path.StartsWith("/api/movies"))
             {

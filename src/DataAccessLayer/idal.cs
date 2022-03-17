@@ -19,7 +19,5 @@ namespace Imdb.Application.DataAccessLayer
         Task<Movie> GetMovieAsync(string movieId);
         Task<IEnumerable<Movie>> GetMoviesAsync(MovieQueryParameters movieQueryParameters);
         Task<List<string>> GetFeaturedMovieListAsync();
-        Task DeleteMovieAsync(string movieId);
-        Task<Movie> UpsertMovieAsync(Movie movie);
     }
 }

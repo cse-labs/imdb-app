@@ -95,42 +95,5 @@ namespace Imdb.Application.DataAccessLayer
         {
             return await App.Config.CacheDal.GetFeaturedMovieListAsync().ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// upsert a movie
-        /// </summary>
-        /// <param name="movie">Movie to upsert</param>
-        /// <returns>Movie</returns>
-        public async Task<Movie> UpsertMovieAsync(Movie movie)
-        {
-            ItemResponse<Movie> response = await cosmosDetails.Container.UpsertItemAsync(movie, new PartitionKey(movie.PartitionKey));
-
-            return response.Resource;
-        }
-
-        /// <summary>
-        /// Delete a movie by Id
-        /// </summary>
-        /// <param name="movieId">Movie ID</param>
-        /// <returns>void</returns>
-        public async Task DeleteMovieAsync(string movieId)
-        {
-            try
-            {
-                await cosmosDetails.Container.DeleteItemAsync<Movie>(movieId, new PartitionKey(Movie.ComputePartitionKey(movieId)));
-            }
-            catch (CosmosException cex)
-            {
-                // ignore 404 errors
-                if (cex.StatusCode != System.Net.HttpStatusCode.NotFound)
-                {
-                    Console.WriteLine(cex.Message);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
     }
 }

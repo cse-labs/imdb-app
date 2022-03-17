@@ -51,9 +51,6 @@ namespace Imdb.Application.DataAccessLayer
             // load data
             genreList = LoadGenres(jsonOptions);
 
-            // temporary storage for upsert / delete
-            MoviesIndex = new Dictionary<string, Movie>();
-
             // 16 bytes
             benchmarkData = "0123456789ABCDEF";
 
@@ -78,9 +75,6 @@ namespace Imdb.Application.DataAccessLayer
             // flush the writes to the index
             writer.Flush(true, true);
         }
-
-        // used for upsert / delete
-        public static Dictionary<string, Movie> MoviesIndex { get; set; }
 
         /// <summary>
         /// Get a single actor by ID
@@ -308,14 +302,6 @@ namespace Imdb.Application.DataAccessLayer
                     return JsonSerializer.Deserialize<Movie>(searcher.Doc(hits.ScoreDocs[0].Doc).GetBinaryValue("json").Bytes);
                 }
             }
-            else
-            {
-                // handle the upserted movies
-                if (MoviesIndex.ContainsKey(movieId))
-                {
-                    return MoviesIndex[movieId];
-                }
-            }
 
             throw new CosmosException("Not Found", System.Net.HttpStatusCode.NotFound, 404, string.Empty, 0);
         }
@@ -462,46 +448,6 @@ namespace Imdb.Application.DataAccessLayer
             {
                 return GetMovies(movieQueryParameters);
             });
-        }
-
-        /// <summary>
-        /// Upsert a movie
-        ///
-        /// Do not store in index or WebV tests will break
-        /// </summary>
-        /// <param name="movie">Movie to upsert</param>
-        /// <returns>Movie</returns>
-        public async Task<Movie> UpsertMovieAsync(Movie movie)
-        {
-            await Task.Run(() =>
-            {
-                if (MoviesIndex.ContainsKey(movie.MovieId))
-                {
-                    movie = MoviesIndex[movie.MovieId];
-                }
-                else
-                {
-                    MoviesIndex.Add(movie.MovieId, movie);
-                }
-            }).ConfigureAwait(false);
-
-            return movie;
-        }
-
-        /// <summary>
-        /// Delete the movie from temporary storage
-        /// </summary>
-        /// <param name="movieId">Movie ID</param>
-        /// <returns>void</returns>
-        public async Task DeleteMovieAsync(string movieId)
-        {
-            await Task.Run(() =>
-            {
-                if (MoviesIndex.ContainsKey(movieId))
-                {
-                    MoviesIndex.Remove(movieId);
-                }
-            }).ConfigureAwait(false);
         }
 
         // load actor list from json file

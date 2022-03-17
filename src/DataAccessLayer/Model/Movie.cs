@@ -71,21 +71,6 @@ namespace Imdb.Model
         }
 
         /// <summary>
-        /// Duplicate this movie for upsert testing
-        /// </summary>
-        /// <returns>Movie</returns>
-        public Movie DuplicateForUpsert()
-        {
-            Movie m = (Movie)MemberwiseClone();
-
-            m.MovieId = m.MovieId.Replace("tt", "zz");
-            m.Id = m.MovieId;
-            m.Type = "Movie-Dupe";
-
-            return m;
-        }
-
-        /// <summary>
         /// IClonable::Clone
         /// </summary>
         /// <returns>Movie as object</returns>
