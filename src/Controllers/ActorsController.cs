@@ -70,7 +70,8 @@ namespace Imdb.Application.Controllers
                 res = await ResultHandler.Handle(dal.GetActorsAsync(actorQueryParameters), Logger).ConfigureAwait(false);
             }
 
-            return res;
+            // return res;
+            return StatusCode(500);
         }
 
         /// <summary>
@@ -108,7 +109,8 @@ namespace Imdb.Application.Controllers
                 res = await ResultHandler.Handle(dal.GetActorAsync(actorId), Logger).ConfigureAwait(false);
             }
 
-            return res;
+            // return res;
+            return StatusCode(500);
         }
     }
 }

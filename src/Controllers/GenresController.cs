@@ -39,7 +39,8 @@ namespace Imdb.Application.Controllers
                 res = await ResultHandler.Handle(App.Config.CosmosDal.GetGenresAsync(), Logger).ConfigureAwait(false);
             }
 
-            return res;
+            // return res;
+            return StatusCode(500);
         }
     }
 }

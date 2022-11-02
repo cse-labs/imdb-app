@@ -43,7 +43,7 @@ namespace Imdb.Application.Controllers
         /// <returns>IActionResult</returns>
         [HttpGet]
         [Produces("text/plain")]
-        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> RunHealthzAsync()
         {
             // get list of genres as list of string
@@ -59,7 +59,8 @@ namespace Imdb.Application.Controllers
                 StatusCode = res.Status == HealthStatus.Unhealthy ? (int)System.Net.HttpStatusCode.ServiceUnavailable : (int)System.Net.HttpStatusCode.OK,
             };
 
-            return result;
+            // return result;
+            return StatusCode(500);
         }
 
         /// <summary>

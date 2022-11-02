@@ -36,6 +36,7 @@ namespace Imdb.Application.Controllers
             logger.LogInformation(nameof(ReadyzAsync));
 
             return Ok("ready");
+            // return StatusCode(500);
         }
     }
 }
