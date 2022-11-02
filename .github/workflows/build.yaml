@@ -3,7 +3,7 @@ name: Build IMDb-App
 on:
   push:
     branches:
-      - imdb-bad-image
+      - main
 
     paths:
     - 'Dockerfile'
@@ -18,7 +18,7 @@ jobs:
 
     runs-on: ubuntu-20.04
     env:
-      DOCKER_REPO: ghcr.io/cse-labs/pib-imdb
+      DOCKER_REPO: ghcr.io/cse-labs/imdb-app
 
     steps:
     - uses: actions/checkout@v2
@@ -44,7 +44,7 @@ jobs:
         # VERSION=$(docker run --rm image --version)
 
         # tag the repo with :latest
-        docker tag image $DOCKER_REPO:bad
+        docker tag image $DOCKER_REPO:latest
 
         # Push to the repo
-        docker push $DOCKER_REPO:bad
+        docker push -a $DOCKER_REPO
